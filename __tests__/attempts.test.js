@@ -151,7 +151,7 @@ describe('event routes', () => {
         expect(attempt.month).toEqual(11);
     });
 
-    it('should return the year', async () => {
+    it('should return the year', async() => {
         const attempt = new Attempt({
             dateOfEvent: new Date('December 12, 2019')
         });
