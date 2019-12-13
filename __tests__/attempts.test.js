@@ -137,5 +137,24 @@ describe('event routes', () => {
             });
     });
 
+    it('should return the day', async() => {
+        const attempt = new Attempt(
+            { dateOfEvent: new Date('December 12, 2019') }
+        );
+        expect(attempt.day).toEqual(12);
+    });
 
+    it('should return the month', async() => {
+        const attempt = new Attempt(
+            { dateOfEvent: new Date('December 12, 2019') }
+        );
+        expect(attempt.month).toEqual(11);
+    });
+
+    it('should return the year', async () => {
+        const attempt = new Attempt({
+            dateOfEvent: new Date('December 12, 2019')
+        });
+        expect(attempt.year).toEqual(2019);
+    });
 });
