@@ -92,7 +92,7 @@ describe('app routes', () => {
         return request(app)
             .get(`/api/v1/recipes/${recipe._id}`)
             .then(res => {
-                expect(res.body).toEqual({
+                expect(res.body).toMatchObject({
                     _id: recipe._id.toString(),
                     name: recipe.name,
                     directions: JSON.parse(JSON.stringify(recipe.directions)),
@@ -186,6 +186,38 @@ describe('app routes', () => {
             })
             .then(attempts => {
                 expect(attempts).toHaveLength(0);
+            });
+    });
+
+    it('should return all events associated with recipe', async() => {
+        const recipe = await Recipe.create({
+            name: 'cookies',
+            directions: ['buy and eat'],
+            ingredients: [{
+                amount: 3,
+                measurement: 'teaspoons',
+                name: 'sugar'
+            }]
+        });
+        const attempts = await Attempt.create([{
+            recipeId: recipe._id,
+            dateOfEvent: Date.now(),
+            rating: 3
+        }]);
+
+        return request(app)
+            .get(`/api/v1/recipes/${recipe._id}`)
+            .then(res => {
+                expect(res.body).toMatchObject({
+                    _id: recipe._id.toString(),
+                    name: 'cookies',
+                    directions: JSON.parse(JSON.stringify(recipe.directions)),
+                    ingredients: [
+                        { _id: expect.any(String), amount: 3, measurement: 'teaspoons', name: 'sugar' }
+                    ],
+                    __v: recipe.__v,
+                    attempts: JSON.parse(JSON.stringify(attempts))
+                });
             });
     });
 });

@@ -148,7 +148,7 @@ describe('event routes', () => {
         const attempt = new Attempt(
             { dateOfEvent: new Date('December 12, 2019') }
         );
-        expect(attempt.month).toEqual(11);
+        expect(attempt.month).toEqual(12);
     });
 
     it('should return the year', async() => {
@@ -157,4 +157,34 @@ describe('event routes', () => {
         });
         expect(attempt.year).toEqual(2019);
     });
+
+    it('can set a day', () => {
+        const attempt = new Attempt(
+            { dateOfEvent: new Date('December 13, 2019') }
+        );
+        
+        attempt.day = 25;
+
+        expect(attempt.day).toEqual(25);
+    });
+    it('can set a month', () => {
+        const attempt = new Attempt(
+            { dateOfEvent: new Date('December 13, 2019') }
+        );
+        
+        attempt.month = 3;
+
+        expect(attempt.month).toEqual(3);
+    });
+    it('can set a year', () => {
+        const attempt = new Attempt(
+            { dateOfEvent: new Date('December 13, 2019') }
+        );
+        
+        attempt.year = 2015;
+
+        expect(attempt.year).toEqual(2015);
+    });
+
+
 });
